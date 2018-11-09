@@ -7,6 +7,10 @@ body {
 	padding: 0;
 }
 
+.chartjs-tooltip {
+	position: absolute;	
+}
+
 .header {
 	display: flex;
 	flex-wrap: no-wrap;
@@ -17,12 +21,9 @@ body {
 	background-color: rgba(124, 121, 115, 0.7);
 }
 
-table {
-	width: 100%
-}
 .chartWrapper {
 	margin: 0 auto;
-	width: 80vw;
+	width: 85vw;
 	height: 75vh;
 }
 
