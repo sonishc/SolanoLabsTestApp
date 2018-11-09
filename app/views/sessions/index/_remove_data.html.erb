@@ -1,0 +1,10 @@
+<div style="text-align: right;">
+	<% if @sessions[0].nil? %>
+	<% else %>
+	<%= link_to 'Import a new CSV file', sessions_path(@sessions),
+    	data: {:confirm => 'Are you sure?'},
+    	:method => :delete,
+    	class: "button_delete" 
+  %>
+  <% end %>
+</div>

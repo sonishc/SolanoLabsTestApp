@@ -1,0 +1,76 @@
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.header {
+	display: flex;
+	flex-wrap: no-wrap;
+	justify-content: space-between;
+	align-items: baseline;
+	padding: 15px 15px 10px 15px;
+	color: white;
+	background-color: rgba(124, 121, 115, 0.7);
+}
+
+table {
+	width: 100%
+}
+.chartWrapper {
+	margin: 0 auto;
+	width: 80vw;
+	height: 75vh;
+}
+
+.button_delete {
+	padding: 5px;
+	border: 1px solid white;
+	font-style: bolder;
+	border-radius: 5px;
+}
+a {
+	color: white;
+	text-decoration: none;
+}
+
+input {
+	background-color: transparent;
+	color: white;
+	padding: 5px;
+	border: 1px solid white;
+	font-style: bolder;	
+	border-radius: 5px;
+}
+select{
+	background-color: transparent;
+	color: white;
+	padding: 10px;
+	border: 1px solid white;
+	font-style: bolder;	
+  cursor: pointer;
+	border-radius: 5px;
+}
+option {
+	color: gray;
+}
+
+.upload {
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid white;
+  color: white;
+}
+.upload_submit {
+  height: 35px;
+  padding: 5px;
+  margin: 5px 0 0 0;
+  cursor: pointer;
+}
+h2 {
+	padding: 0;
+	margin: 3px;
+}

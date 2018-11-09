@@ -1,0 +1,78 @@
+<script>
+
+var sessions = "<%= @sessions_json %>";
+
+sessions = JSON.parse(sessions.replace(/&quot;/g,'"'));
+
+var sessions_data  = new Array();
+var create_at  = new Array();
+
+for (x in sessions) {
+    sessions_data.push(sessions[x]);
+    create_at.push(sessions[x]['created_at'].slice(0,10));
+}
+
+create_at = removeRepeatedItem(create_at);
+
+const passed = "rgba(48, 255, 51, 0.3)";
+const failed = "rgba(255, 60, 0, 0.3)";
+const border_passed = "white";
+const border_failed = "white";
+var stack = new Array();
+
+var datasets_objects = [];
+
+for (let i = 0; i < sessions_data.length; i++) {
+  datasets_objects.push(
+    {
+      label: 'id - ' + sessions_data[i]['created_at']
+        .replace(/T/g, ' ')
+        .replace(/.000Z/g, ' ') + ' Duration',
+      data: [sessions_data[i].duration],
+      borderWidth: 2,
+      borderColor:
+        sessions_data[i].summary_status == 'passed' ? border_passed : border_failed,
+      backgroundColor: window["colorTag"](sessions_data[i].summary_status),
+      stack: create_at.indexOf(sessions_data[i]['created_at'].slice(0,10)),
+    }
+  );
+}
+let config = {
+  type: 'bar',
+  data: {
+    labels: sessions_data.length > 0 ? ['Sessions - ' + abnormal(sessions_data)] : ['Please choose a CSV file'],
+    datasets: datasets_objects
+  },
+  
+  options: {
+    legend: {
+      display: false,
+      position: 'bottom'
+    },
+    scales: {
+      xAxes: [{
+        stacked: true,
+        barPercentage: 1,
+        ticks: {
+          beginAtZero:true
+            // display: false //this will remove only the label
+        }
+      }],
+      yAxes: [{ 
+        stacked: true, 
+        barPercentage: 1,
+       }]
+    },
+    title: {
+      display: true,
+      text: 'Sessions history ( green - passed, pink - failed, red - error, brown - stopped )' 
+    },
+    responsive: true,
+    maintainAspectRatio: false
+  }
+};
+
+let ctx = document.getElementById("myChart").getContext("2d");
+new Chart(ctx, config);
+
+</script>
