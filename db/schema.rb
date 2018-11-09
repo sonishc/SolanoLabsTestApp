@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,32 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_181_109_065_228) do
-  create_table 'contacts', force: :cascade do |t|
-    t.string 'full_name'
-    t.string 'email'
-    t.integer 'phone_number'
-    t.text 'address'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+ActiveRecord::Schema.define(version: 2018_11_07_235526) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "started_by"
+    t.datetime "created_at", null: false
+    t.string "summary_status"
+    t.integer "duration"
+    t.integer "worker_time"
+    t.integer "bundle_time"
+    t.integer "num_workers"
+    t.string "branch"
+    t.string "commit_id"
+    t.integer "started_tests_count"
+    t.integer "passed_tests_count"
+    t.integer "failed_tests_count"
+    t.integer "pending_tests_count"
+    t.integer "skipped_tests_count"
+    t.integer "error_tests_count"
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'sessions', force: :cascade do |t|
-    t.string 'started_by'
-    t.datetime 'created_at', null: false
-    t.string 'summary_status'
-    t.integer 'duration'
-    t.integer 'worker_time'
-    t.integer 'bundle_time'
-    t.integer 'num_workers'
-    t.string 'branch'
-    t.string 'commit_id'
-    t.integer 'started_tests_count'
-    t.integer 'passed_tests_count'
-    t.integer 'failed_tests_count'
-    t.integer 'pending_tests_count'
-    t.integer 'skipped_tests_count'
-    t.integer 'error_tests_count'
-    t.datetime 'updated_at', null: false
-  end
 end

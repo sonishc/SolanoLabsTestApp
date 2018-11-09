@@ -3,9 +3,13 @@
 class SessionsController < ApplicationController
   def index
     @sessions = Session.all
-    @created_at = params[:session].nil? ? '' : params[:session][:sessions_created_at].first(10)
-    @created_at_values = Session.where('created_at LIKE ?', "%#{@created_at}%")
-    @sessions_json = @created_at_values.to_json
+    if params[:session].nil?
+      @created_at = ''
+      @sessions_json = @sessions.to_json
+    else
+      @created_at = params[:session][:sessions_created_at]
+      @sessions_json = Session.sessions_json(@created_at)
+    end
     @created_at_uniq = Session.created_at_uniq_values || []
   end
 

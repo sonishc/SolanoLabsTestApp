@@ -25,4 +25,9 @@ class Session < ApplicationRecord
     end
     created_at_uniq.uniq!
   end
+
+  def self.sessions_json(param)
+    created_at_values = Session.all.reject { |x| x.created_at.to_s.first(10) != param.first(10) }
+    created_at_values = created_at_values.to_json
+  end
 end
