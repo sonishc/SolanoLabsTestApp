@@ -45,9 +45,48 @@ let config = {
   },
   
   options: {
+    "hover": {
+      "animationDuration": 0
+    },
+    plugins: [{
+      beforeInit: function(chart, options) {
+          alert(sadd);
+      }
+    }],
+    animation: {
+      duration: 1200,
+      onProgress: function () {
+        var chartInstance = this.chart,
+        ctx = chartInstance.ctx;
+        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.lineWidth = 12;
+
+        ctx.tooltipFontSize = 124;
+
+        this.data.datasets.forEach(function (dataset, i) {
+            var meta = chartInstance.controller.getDatasetMeta(i);
+            meta.data.forEach(function (bar, index) {
+                var data = dataset.data[index];                            
+                ctx.fillText(data, bar._model.x, bar._model.y + 10);
+            });
+        });   
+      }
+    },
     legend: {
       display: false,
       position: 'bottom'
+    },
+    tooltips: {
+      bodySpacing: 66,
+      intersect: true,
+      bodyFontColor: '#fff',
+      backgroundColor: '#666',
+      titleMarginTop: 20,
+      yPadding: 50,
+      xPadding: 50,
+      footer: ['sd']
     },
     scales: {
       xAxes: [{
@@ -61,6 +100,7 @@ let config = {
       yAxes: [{ 
         stacked: true, 
         barPercentage: 1,
+        ticks: {mirror: true}
        }]
     },
     title: {
@@ -69,10 +109,10 @@ let config = {
     },
     responsive: true,
     maintainAspectRatio: false
-  }
+  },
 };
 
 let ctx = document.getElementById("myChart").getContext("2d");
-new Chart(ctx, config);
+new Chart(ctx, config)
 
 </script>
