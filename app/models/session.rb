@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Session < ApplicationRecord
-  validates_presence_of :created_at
+  validates_presence_of :created_at, :duration, :summary_status
 
   require 'csv'
 

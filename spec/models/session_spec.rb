@@ -18,4 +18,14 @@ RSpec.describe Session, type: :model do
     subject.created_at = nil
     expect(subject).to_not be_valid
   end
+
+  it 'is not valid without a summary_status' do
+    subject.summary_status = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'is not valid without a duration' do
+    subject.duration = nil
+    expect(subject).to_not be_valid
+  end
 end
