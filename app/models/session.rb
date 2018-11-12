@@ -23,6 +23,7 @@ class Session < ApplicationRecord
     Session.all.each do |item|
       created_at_uniq << item.created_at.to_date.to_s
     end
+    created_at_uniq.unshift 'ALL DAYS'
     created_at_uniq.uniq!
   end
 

@@ -1,13 +1,13 @@
 <div style="<%= @sessions.empty? ? 'display: none;' : 'display: block;' %>">
 	<%= form_tag({}, {:method => :get}) do %>
+	<%# byebug %>
 		  <%= select(
 	  			"session", "sessions_created_at",
 			  	@created_at_uniq.collect {|created_at| [ created_at ] },
 			  	{ prompt: 'Select a day' },
-			  	:onchange => "this.form.submit();"
+			  	:onchange => "this.form.submit();",
 			  )
 		%>
-	<% end %><br>
 
-	<%= link_to 'All sessions', sessions_path, method: :get %>
+	<% end %><br>
 </div>
