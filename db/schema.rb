@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2018_11_07_235526) do
   enable_extension "plpgsql"
 
   create_table "sessions", force: :cascade do |t|
+    t.integer "session_id"
     t.string "started_by"
     t.datetime "created_at", null: false
     t.string "summary_status"

@@ -1,4 +1,4 @@
-<div style="<%= @sessions[0].nil? ? 'display: block;' :'display: none;' %>">
+<div style="<%= @sessions.empty? ? 'display: block;' :'display: none;' %>">
 	<h2>Import a CSV File</h2>
   <%= form_tag import_sessions_path, multipart: true do %>
     <%= file_field_tag :file, class: "upload" %><br>

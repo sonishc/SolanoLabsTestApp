@@ -8,7 +8,7 @@ class Session < ApplicationRecord
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       session_hash = row.to_hash
-      session = Session.where(id: session_hash['id'])
+      session = Session.where(session_id: session_hash['session_id'])
 
       if session.count == 1
         session.first.update_attributes(session_hash)

@@ -5,8 +5,7 @@ function abnormal(obj) {
       return 'abnormal'
     }
   }
-    return 'normal'
-
+  return 'normal'
 }
 
 function colorTag(color) {
@@ -24,7 +23,6 @@ function colorTag(color) {
       var res = "#8D6645"
       break;
   }
-
   return res;
 }
 
@@ -32,5 +30,5 @@ function removeRepeatedItem(arr) {
   var arr = arr.filter( function( item, index, inputArray ) {
     return inputArray.indexOf(item) == index;
   });
-    return arr;
+  return arr;
 }

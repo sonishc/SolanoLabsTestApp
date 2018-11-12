@@ -3,6 +3,7 @@
 class CreateSessions < ActiveRecord::Migration[5.2]
   def change
     create_table :sessions do |t|
+      t.integer :session_id
       t.string :started_by
       t.string :created_at
       t.string :summary_status
