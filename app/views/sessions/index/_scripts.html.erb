@@ -7,54 +7,105 @@ sessions = JSON.parse(sessions.replace(/&quot;/g,'"'));
 var sessions_data  = new Array();
 var create_at  = new Array();
 
+const passed = "rgba(48, 255, 51, 0.3)";
+const failed = "rgba(255, 60, 0, 0.3)";
+const border_passed = "white";
+const border_failed = "white";
+
 for (x in sessions) {
     sessions_data.push(sessions[x]);
     create_at.push(sessions[x]['created_at'].slice(0,10));
 }
 
-create_at = removeRepeatedItem(create_at);
+var create_at = removeRepeatedItem(create_at);
+var duration_time_unsort = getDataForDatasets(sessions_data, create_at, 'duration');
 
-const passed = "rgba(48, 255, 51, 0.3)";
-const failed = "rgba(255, 60, 0, 0.3)";
-const border_passed = "white";
-const border_failed = "white";
-var stack = new Array();
 
-var datasets_objects = [];
-
+datasets_objects2 = [];
 for (let i = 0; i < sessions_data.length; i++) {
-  datasets_objects.push(
+  datasets_objects2.push(
     {
-      label: 'id - ' + sessions_data[i]['created_at']
-        .replace(/T/g, ' ')
-        .replace(/.000Z/g, ' ') + ' Duration',
-      data: [sessions_data[i].duration],
-      borderWidth: 2,
-      borderColor:
-        sessions_data[i].summary_status == 'passed' ? border_passed : border_failed,
-      backgroundColor: window["colorTag"](sessions_data[i].summary_status),
-      stack: create_at.indexOf(sessions_data[i]['created_at'].slice(0,10)),
+      label: ' ' + sessions_data[i]['summary_status']  + ' Duration',
+      data: duration_time_unsort[i],
+      borderWidth: 1,
+      borderColor: 'white',
+      backgroundColor: 'rgba(92, 168, 77, 0.5)',
+      stack: 1
     }
   );
 }
+
+var datasets_objects = [];
+for (let i = 0; i < sessions_data.length; i++) {  
+  datasets_objects.push(
+    {
+      label: ' Duration',
+      data: duration_time_unsort[i],
+      borderWidth: 1,
+      borderColor: 'green',
+      backgroundColor: '#C0FFC1',
+    }
+  );
+}
+
 let config = {
   type: 'bar',
   data: {
-    labels: sessions_data.length > 0 ? ['Sessions - ' + abnormal(sessions_data)] : ['Please choose a CSV file'],
-    datasets: datasets_objects
+    labels: create_at,
+    datasets: datasets_objects,
   },
-  
   options: {
-    "hover": {
-      "animationDuration": 0
+    legend: {
+      display: false,
+      position: 'bottom'
     },
-    plugins: [{
-      beforeInit: function(chart, options) {
-          alert(sadd);
+    tooltips: {
+      mode: 'point',
+      intersect: false
+    },
+    scales: {
+      xAxes: [{
+        stacked: true,
+      }],
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          zeroLineWidth: 2,
+          zeroLineColor: 'green',
+        }
+      }]
+    },
+    responsive: true,
+    onClick: function(e, d) {
+      if (d.length > 0) {
+        var norm_or_abnorm = failes(sessions_data, create_at)
+        var day =  create_at[`${d[0]._index}`];
+        var norm_or_abnorm = norm_or_abnorm[`${d[0]._index}`];
+        norm_or_abnorm = ( norm_or_abnorm == undefined )  ? 'Normal' : norm_or_abnorm
+        alert( day + ' ' + norm_or_abnorm);
       }
-    }],
+    }
+  },
+};
+
+
+let config2 = {
+  type: 'horizontalBar',
+  data: {
+    labels: create_at,
+    datasets: datasets_objects2 
+  },
+  responsive: true,
+  options: {
+    legend: {
+      display: false,
+      position: 'bottom'
+    },
+    tooltips: {
+      enabled: false,
+    },
     animation: {
-      duration: 1200,
+      duration: 300,
       onProgress: function () {
         var chartInstance = this.chart,
         ctx = chartInstance.ctx;
@@ -68,51 +119,38 @@ let config = {
         this.data.datasets.forEach(function (dataset, i) {
             var meta = chartInstance.controller.getDatasetMeta(i);
             meta.data.forEach(function (bar, index) {
-                var data = dataset.data[index];                            
-                ctx.fillText(data, bar._model.x, bar._model.y + 10);
+                var data = dataset.data[index]; 
+                ctx.fillText(data, bar._model.x - 10, bar._model.y - 2);
             });
         });   
       }
     },
-    legend: {
-      display: false,
-      position: 'bottom'
-    },
-    tooltips: {
-      bodySpacing: 66,
-      intersect: true,
-      bodyFontColor: '#fff',
-      backgroundColor: '#666',
-      titleMarginTop: 20,
-      yPadding: 50,
-      xPadding: 50,
-      footer: ['sd']
-    },
+
+    zeroLineWidth: 15,
     scales: {
       xAxes: [{
         stacked: true,
-        barPercentage: 1,
-        ticks: {
-          beginAtZero:true
-            // display: false //this will remove only the label
+        gridLines: {
+          zeroLineWidth: 3,
+          zeroLineColor: 'gray',
         }
       }],
-      yAxes: [{ 
-        stacked: true, 
-        barPercentage: 1,
-        ticks: {mirror: true}
-       }]
-    },
-    title: {
-      display: true,
-      text: 'Sessions history ( green - passed, pink - failed, red - error, brown - stopped )' 
-    },
-    responsive: true,
-    maintainAspectRatio: false
-  },
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false
+        },
+      }]
+    }
+  }
 };
 
-let ctx = document.getElementById("myChart").getContext("2d");
+
+let ctx = document.getElementById("chartPassingFailing").getContext("2d");
 new Chart(ctx, config)
+
+
+let ctx2 = document.getElementById("durrationVsTime").getContext("2d");
+new Chart(ctx2, config2)
 
 </script>
