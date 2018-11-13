@@ -8,11 +8,14 @@
 	</canvas> 
 </div>
 
-
+<br>
+<h2 align="center"> Abnormal counts </h2>
 <p align="center" style="width: 80%; margin: 0 auto; text-align: justify;">
-	Abnormal counts
-
+	To calculate abnormal days, I counted the average value of failed builds. What I did next. I counted the number of unsuccessful builds per day for all days, take their amount and their counts of failed builds. 
+	Culculation: ( average = amount / counts of failed builds )
+	.It gives me an average. Then if the count of failed builds per day is less than the average a day is considered as Normal. In other case this day is Abnormal.
 </p>
+<br>
 
 <h2 align="center">Duration vs. time. "duration" and "created_at"</h2>
 <div class="chartWrapper">

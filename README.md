@@ -10,9 +10,10 @@ App parse csv file and draws a data chart.
 * ChartJs
 * Rspec
 
-### Abnormal and normal
-For search abnormal days i used summary_status
-field that have uncorrect value like: failed, error or stopped. Also can count duration  of tests and get average of them and sort abnormal and normal days.
+##### Abnormal and normal
+	To calculate abnormal days, I counted the average value of failed builds. What I did next. I counted the number of unsuccessful builds per day for all days, take their amount and their counts of failed builds. 
+	Culculation: ( average = amount / counts of failed builds )
+	.It gives me an average. Then if the count of failed builds per day is less than the average a day is considered as Normal. In other case this day is Abnormal.
 
 ### Result
 
