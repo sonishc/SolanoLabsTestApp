@@ -6,58 +6,56 @@ sessions = JSON.parse(sessions.replace(/&quot;/g,'"'));
 
 var sessions_data  = new Array();
 var create_at  = new Array();
-
-const passed = "rgba(48, 255, 51, 0.3)";
-const failed = "rgba(255, 60, 0, 0.3)";
-const border_passed = "white";
-const border_failed = "white";
+var create_at_with_time  = new Array();
+var duration  = new Array();
 
 for (x in sessions) {
     sessions_data.push(sessions[x]);
     create_at.push(sessions[x]['created_at'].slice(0,10));
+    time = sessions[x]['created_at'].replace(/T/g, ' ').replace(/.000Z/g, ' ');
+    create_at_with_time.push(time);
+    duration.push(sessions[x]['duration']);        
 }
 
 var create_at = removeRepeatedItem(create_at);
-var duration_time_unsort = getDataForDatasets(sessions_data, create_at, 'duration');
 
+var passed = get_fields(sessions_data, create_at, 'passed');
+var failed = get_fields(sessions_data, create_at, 'failed');
+var error = get_fields(sessions_data, create_at, 'error');
+var stopped = get_fields(sessions_data, create_at, 'stopped');
 
-datasets_objects2 = [];
-for (let i = 0; i < sessions_data.length; i++) {
-  datasets_objects2.push(
-    {
-      label: ' ' + sessions_data[i]['summary_status']  + ' Duration',
-      data: duration_time_unsort[i],
-      borderWidth: 1,
-      borderColor: 'white',
-      backgroundColor: 'rgba(92, 168, 77, 0.5)',
-      stack: 1
-    }
-  );
-}
+passed = createData(passed, create_at.length);
+failed = createData(failed, create_at.length);
+error = createData(error, create_at.length);
+stopped = createData(stopped, create_at.length);
 
-var datasets_objects = [];
-for (let i = 0; i < sessions_data.length; i++) {  
-  datasets_objects.push(
-    {
-      label: ' Duration',
-      data: duration_time_unsort[i],
-      borderWidth: 1,
-      borderColor: 'green',
-      backgroundColor: '#C0FFC1',
-    }
-  );
-}
 
 let config = {
   type: 'bar',
   data: {
     labels: create_at,
-    datasets: datasets_objects,
+    datasets: [{
+      label: 'Passed',
+      backgroundColor: 'green',
+      data: passed
+    }, {
+      label: 'Failed',
+      backgroundColor: 'pink',
+      data: failed
+    }, {
+      label: 'Error',
+      backgroundColor: 'red',
+      data: error
+    }, {
+      label: 'Stopped',
+      backgroundColor: 'brown',
+      data: stopped
+    }]
   },
   options: {
     legend: {
-      display: false,
-      position: 'bottom'
+      display: true,
+      position: 'top'
     },
     tooltips: {
       mode: 'point',
@@ -70,8 +68,7 @@ let config = {
       yAxes: [{
         stacked: true,
         gridLines: {
-          zeroLineWidth: 2,
-          zeroLineColor: 'green',
+          zeroLineColor: 'black',
         }
       }]
     },
@@ -82,7 +79,10 @@ let config = {
         var day =  create_at[`${d[0]._index}`];
         var norm_or_abnorm = norm_or_abnorm[`${d[0]._index}`];
         norm_or_abnorm = ( norm_or_abnorm == undefined )  ? 'Normal' : norm_or_abnorm
-        alert( day + ' ' + norm_or_abnorm);
+        alert(`${day} ( ${norm_or_abnorm} )`);
+        var fail = document.getElementById('failes')
+        fail.innerHTML = `${day} ( ${norm_or_abnorm} )`;
+        fail.style.color =  norm_or_abnorm == 'Normal' ? 'green' : '' ; 
       }
     }
   },
@@ -90,10 +90,17 @@ let config = {
 
 
 let config2 = {
-  type: 'horizontalBar',
+  type: 'line',
   data: {
-    labels: create_at,
-    datasets: datasets_objects2 
+    labels: create_at_with_time,
+    datasets: [{
+      label: 'Duration: ',
+      data: duration,
+      borderWidth: 1,
+      borderColor: 'black',
+      fill: false,
+      stack: 1
+    }] 
   },
   responsive: true,
   options: {
@@ -102,43 +109,18 @@ let config2 = {
       position: 'bottom'
     },
     tooltips: {
-      enabled: false,
+      backgroundColor: 'green'
     },
-    animation: {
-      duration: 300,
-      onProgress: function () {
-        var chartInstance = this.chart,
-        ctx = chartInstance.ctx;
-        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        ctx.lineWidth = 12;
-
-        ctx.tooltipFontSize = 124;
-
-        this.data.datasets.forEach(function (dataset, i) {
-            var meta = chartInstance.controller.getDatasetMeta(i);
-            meta.data.forEach(function (bar, index) {
-                var data = dataset.data[index]; 
-                ctx.fillText(data, bar._model.x - 10, bar._model.y - 2);
-            });
-        });   
-      }
-    },
-
-    zeroLineWidth: 15,
     scales: {
       xAxes: [{
-        stacked: true,
         gridLines: {
-          zeroLineWidth: 3,
+          zeroLineWidth: 2,
           zeroLineColor: 'gray',
         }
       }],
       yAxes: [{
-        stacked: true,
         gridLines: {
-          display: false
+          zeroLineWidth: 3,
         },
       }]
     }
@@ -146,11 +128,11 @@ let config2 = {
 };
 
 
-let ctx = document.getElementById("chartPassingFailing").getContext("2d");
+let ctx = document.getElementById('chartPassingFailing').getContext('2d');
 new Chart(ctx, config)
 
 
-let ctx2 = document.getElementById("durrationVsTime").getContext("2d");
+let ctx2 = document.getElementById('durrationVsTime').getContext('2d');
 new Chart(ctx2, config2)
 
 </script>
