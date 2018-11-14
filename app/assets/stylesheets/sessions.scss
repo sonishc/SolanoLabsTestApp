@@ -18,7 +18,7 @@ body {
 	align-items: baseline;
 	padding: 15px 15px 10px 15px;
 	color: white;
-	background-color: rgba(124, 121, 115, 0.7);
+	background-color: rgba(23, 37, 87, 0.7);
 }
 
 .chartWrapper {
@@ -56,7 +56,8 @@ select{
 	border-radius: 5px;
 }
 option {
-	color: gray;
+	color: white;
+	background: rgb(122, 133, 173);
 }
 
 .upload {
