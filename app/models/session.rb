@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Session
 class Session < ApplicationRecord
   validates_presence_of :created_at, :duration, :summary_status
 
@@ -27,8 +28,9 @@ class Session < ApplicationRecord
   end
 
   def self.sessions_json(param)
-    created_at_values = Session.all.select { |x| x.created_at.to_s.first(10) == param.first(10)
-    }
+    created_at_values = Session.all.select do |x|
+      x.created_at.to_s.first(10) == param.first(10)
+    end
     created_at_values.to_json
   end
 end

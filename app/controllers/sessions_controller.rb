@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# SessionsController
 class SessionsController < ApplicationController
   def index
     @sessions = Session.order(:created_at)
@@ -8,7 +9,7 @@ class SessionsController < ApplicationController
       @sessions_json = @sessions.to_json
     else
       @created_at = params[:session][:sessions_created_at]
-      if @created_at == 'ALL DAYS' then redirect_to root_path end
+      redirect_to root_path if @created_at == 'ALL DAYS'
       @sessions_json = Session.sessions_json(@created_at)
     end
     @created_at_uniq = Session.created_at_uniq_values || []
