@@ -2,7 +2,7 @@
 
 class SessionsController < ApplicationController
   def index
-    @sessions = Session.all
+    @sessions = Session.order(:created_at)
     if params[:session].nil?
       @created_at = ''
       @sessions_json = @sessions.to_json
