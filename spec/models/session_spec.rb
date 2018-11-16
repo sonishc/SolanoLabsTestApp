@@ -28,4 +28,9 @@ RSpec.describe Session, type: :model do
     subject.duration = nil
     expect(subject).to_not be_valid
   end
+
+  it 'returns json object ' do
+    expect(Session.sessions_json('')).to eq [].to_json
+  end
+ 
 end
