@@ -1,10 +1,9 @@
-<div style="text-align: right;">
-	<% if @sessions.empty? %>
-	<% else %>
-	<%= link_to 'Import a new CSV file', sessions_path(@sessions),
+<% unless hidden?(sessions) %>
+<div class="remove-data">
+	<%= link_to 'Import a new CSV file', sessions_path(sessions),
     	data: {:confirm => 'Are you sure?'},
     	:method => :delete,
-    	class: "button_delete" 
+    	class: 'button_delete' 
   %>
-  <% end %>
 </div>
+<% end %>

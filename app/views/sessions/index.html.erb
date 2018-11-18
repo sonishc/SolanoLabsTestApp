@@ -1,10 +1,10 @@
+<%= content_tag :div, id: "sessions", data: {sessions_json: @sessions_json} do %>
+<% end %>
 <div class="header">
-	<%= render "sessions/index/csv" %>
-	<%= render "sessions/index/select" %>
-	<%= render "sessions/index/remove_data" %>
+  <%= render partial: "sessions/index/csv", locals: {sessions: @sessions}  %>
+  <%= render partial: "sessions/index/select", locals: {created_at_uniq: @created_at_uniq, sessions: @sessions} %>
+  <%= render partial: "sessions/index/remove_data", locals: {sessions: @sessions} %>
 </div>
-
 <br>
 
 <%= render "sessions/index/canvas" %>
-<%= render "sessions/index/scripts" %>

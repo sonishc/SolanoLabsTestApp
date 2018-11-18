@@ -1,25 +1,29 @@
 
-<h2 align="center">Passing and failing builds per day</h2>
+<h2>Passing and failing builds per day</h2>
 <h3 id='failes' align="center">( Click on stack to get abnormal or normal value )</h3>
-
-<div class="chartWrapper">
-	<canvas id="chartPassingFailing">
-		Your browser does not support the canvas element.
-	</canvas> 
+<div class="scroll">
+	<div class="chartWrapper">
+		<canvas id="chartPassingFailing">
+			Your browser does not support the canvas element.
+		</canvas> 
+	</div>
 </div>
 
 <br>
-<h2 align="center"> Abnormal counts </h2>
-<p align="center" style="width: 80%; margin: 0 auto; text-align: justify;">
+<h2> Abnormal counts </h2>
+<p class="abnormal-description">
 	To calculate abnormal days, I counted the average value of failed builds. What I did next. I counted the number of unsuccessful builds per day for all days, take their amount and their counts of failed builds. 
 	Culculation: ( average = amount / counts of failed builds )
 	.It gives me an average. Then if the count of failed builds per day is less than the average a day is considered as Normal. In other case this day is Abnormal.
 </p>
 <br>
 
-<h2 align="center">Duration vs. time. "duration" and "created_at"</h2>
-<div class="chartWrapper">
-	<canvas id="durrationVsTime">
-		Your browser does not support the canvas element.
-	</canvas> 
+<h2>Duration vs. time. "duration" and "created_at"</h2>
+
+<div class="scroll">
+	<div class="chartWrapper">
+		<canvas id="durrationVsTime">
+			Your browser does not support the canvas element.
+		</canvas> 
+	</div>
 </div>
