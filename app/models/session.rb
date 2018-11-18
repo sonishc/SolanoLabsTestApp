@@ -9,27 +9,26 @@ class Session < ApplicationRecord
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       session_hash = row.to_hash
-      session = Session.where(session_id: session_hash['session_id'])
-      if session.count == 1
-        session.first.update_attributes(session_hash)
-      else
-        Session.create!(session_hash)
-      end
+      id = session_hash['session_id']
+      break if id.nil?
+
+      Session.create_with(session_hash).find_or_create_by(session_id: id)
     end
   end
 
   def self.created_at_uniq_values
-    created_at_uniq = []
-    Session.all.each do |item|
-      created_at_uniq << item.created_at.to_date.to_s
+    created_at_uniq = Session.all.map do |row|
+      row.created_at.to_date
     end
     created_at_uniq.unshift 'ALL DAYS'
-    created_at_uniq.uniq!
+    created_at_uniq.uniq
   end
 
-  def self.sessions_json(param)
-    created_at_values = Session.all.select do |x|
-      x.created_at.to_s.first(10) == param.first(10)
+  def self.session_json(param)
+    return if param.casecmp('ALL DAYS').zero?
+
+    created_at_values = Session.all.select do |row|
+      row.created_at.to_date == param.to_date
     end
     created_at_values.to_json
   end
