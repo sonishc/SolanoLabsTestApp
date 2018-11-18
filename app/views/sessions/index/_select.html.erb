@@ -1,13 +1,12 @@
 <% unless hidden?(sessions) %>
 <div>
-	<%= form_tag({}, {:method => :get}) do %>
-		<%= select(
-				"session", "session_created_at",
-				created_at_uniq.collect {|created_at| [ created_at ] },
-				{ prompt: 'Select a day' },
-				:onchange => "this.form.submit();"
-			)
-	%>
-	<% end %><br>
+  <%= form_tag({}, {:method => :get}) do %>
+    <%= select(
+      "session", "session_created_at",
+        created_at_uniq.collect {|created_at| [ created_at ] },
+        { prompt: 'Select a day' },
+        :onchange => "this.form.submit();"
+    )%>
+  <% end %><br>
 </div>
 <% end %>

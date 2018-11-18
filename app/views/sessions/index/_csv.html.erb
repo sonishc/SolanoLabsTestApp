@@ -1,6 +1,6 @@
 <% if hidden?(sessions) %>
 <div>
-	<h2>Import a CSV File</h2>
+  <h2>Import a CSV File</h2>
   <%= form_tag import_sessions_path, multipart: true do %>
     <%= file_field_tag :file, class: "upload" %><br>
     <%= submit_tag "Import CSV" , class: "upload_submit" %>

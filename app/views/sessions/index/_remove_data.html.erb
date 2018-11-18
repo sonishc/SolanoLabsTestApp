@@ -1,9 +1,9 @@
 <% unless hidden?(sessions) %>
 <div class="remove-data">
-	<%= link_to 'Import a new CSV file', sessions_path(sessions),
-    	data: {:confirm => 'Are you sure?'},
-    	:method => :delete,
-    	class: 'button_delete' 
+  <%= link_to 'Import a new CSV file', sessions_path(sessions),
+      data: {:confirm => 'Are you sure?'},
+      :method => :delete,
+      class: 'button_delete' 
   %>
 </div>
 <% end %>
