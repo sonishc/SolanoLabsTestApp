@@ -1,14 +1,12 @@
-// Place all the styles related to the Sessions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
 	margin: 0;
 	padding: 0;
 }
 
-.chartjs-tooltip {
-	position: absolute;	
+h2 {
+	padding: 0;
+	margin: 3px;
+	text-align: center;
 }
 
 .header {
@@ -18,25 +16,35 @@ body {
 	align-items: baseline;
 	padding: 15px 15px 10px 15px;
 	color: white;
-	background-color: rgba(23, 37, 87, 0.7);
+  background-color: rgba(23, 37, 87, 0.7);
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  .button_delete {
+    padding: 5px;
+    border: 1px solid white;
+    font-style: bolder;
+    border-radius: 5px;
+  }
+  .remove-data {
+    text-align: right;
+  }
+}
+
+.scroll {
+	max-width: 95vw;
+	max-height: 80vh;
 }
 
 .chartWrapper {
 	display: block;
 	margin: 0 auto;
-	width: 95vw;
+	max-width: 95vw;
+	max-height: 80vh;
 }
 
-.button_delete {
-	padding: 5px;
-	border: 1px solid white;
-	font-style: bolder;
-	border-radius: 5px;
-}
-a {
-	color: white;
-	text-decoration: none;
-}
+
 
 input {
 	background-color: transparent;
@@ -72,7 +80,9 @@ option {
   margin: 5px 0 0 0;
   cursor: pointer;
 }
-h2 {
-	padding: 0;
-	margin: 3px;
+
+.abnormal-description {
+  width: 80%;
+  margin: 0 auto;
+  text-align: justify;
 }
