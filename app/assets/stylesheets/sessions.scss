@@ -46,6 +46,8 @@ h2 {
 
 
 
+
+
 input {
 	background-color: transparent;
 	color: white;
@@ -81,8 +83,13 @@ option {
   cursor: pointer;
 }
 
-.abnormal-description {
-  width: 80%;
-  margin: 0 auto;
-  text-align: justify;
+.description {
+	margin: 5%;
+	.abnormal-description {
+	  width: 80%;
+	  margin: 0 auto;
+	  text-align: justify;
+	}
 }
+
+
